@@ -19,33 +19,6 @@ def open_my_socket(ip_addr, port_no):
 		sys.exit(1)
 
 
-def receive_data():
-	#data = my_socket.recv(max_packet_length)
-	#print data
-	print FileDownload, FileDownloadName
-	if FileDownload:
-		f = open(FileDownloadName, 'wb')
-	else:
-		f = open('received_file', 'wb')
-
-	while True:
-		#print "receiving data.."
-		data = my_socket.recv(max_packet_length)
-		if 'xumeshx' in data:
-			break
-		f.write(data)
-
-	f.close()
-
-	if FileDownload:
-		print 'File Downloaded:' + FileDownloadName
-	else:
-		f = open('received_file', 'r')
-		print f.read()
-		f.close()
-		#os.system("rm received_file")
-
-
 def main():
 	
 	if len(sys.argv) < 3:
