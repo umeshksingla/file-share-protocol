@@ -1,6 +1,6 @@
 # umesh_client.py
 
-import os
+import os, re
 import sys
 import socket
 
@@ -62,14 +62,16 @@ def main():
 				if 'endoffile' in data or flag == 1:
 					if flag:
 						print data
-					flag = 1
+					else:
+						flag = 1
+						f.write(re.sub('endoffile', '', data))
 				else:
 					if not flag:
 						f.write(data)
 			f.close()
 
 			if FileDownload:
-				print 'File Downloaded:' + FileDownloadName
+				print 'File Downloaded: ' + FileDownloadName
 				FileDownload = 0
 			else:
 				f = open('received_file', 'r')
