@@ -6,6 +6,7 @@ import socket
 
 max_packet_length = 1024
 port = 1231
+udp_port = 5678
 
 
 def IndexGetLongList(connection):
@@ -129,6 +130,26 @@ def FileDownloadTCP(input_file, connection):
 	connection.send('endoffile')
 	to_send_file.close()
 	FileHashVerify(input_file, connection)
+
+
+def FileDownloadUDP(input_file):
+	
+	udp_socket = socket.socket(AF_INET,SOCK_DGRAM)
+	udp_host = socket.gethostname()
+	addr = (udp_host, udp_port)
+
+	file_name = input_file
+
+	f = open(file_name,"rb") 
+	data = f.read(max_packet_length)
+
+	udp_socket.sendto(data, addr)
+	while data:
+	    if udp_socket.sendto(data, addr):
+	        data = f.read(max_packet_length)
+	udp_socket.sendto('xumeshx', addr)
+	udp_socket.close()
+	f.close()
 
 
 def parse_input(input_string, connection):

@@ -57,6 +57,7 @@ def main():
 			while True:
 				data = my_socket.recv(max_packet_length)
 				if 'xumeshx' in data:
+					print data.replace('xumeshx', '')
 					break
 				if 'endoffile' in data or flag == 1:
 					if flag:
