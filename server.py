@@ -5,7 +5,7 @@ import sys
 import socket
 
 max_packet_length = 1024
-port = 1231
+port = 1230
 udp_port = 5678
 
 
@@ -134,20 +134,22 @@ def FileDownloadTCP(input_file, connection):
 
 def FileDownloadUDP(input_file):
 	
-	udp_socket = socket.socket(AF_INET,SOCK_DGRAM)
+	content = ''
+	udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, 0)
 	udp_host = socket.gethostname()
 	addr = (udp_host, udp_port)
 
-	file_name = input_file
-
-	f = open(file_name,"rb") 
+	f = open(os.path.expanduser('~') + '/' + input_file,"rb")
 	data = f.read(max_packet_length)
-
-	udp_socket.sendto(data, addr)
+	#print "data1", data
 	while data:
-	    if udp_socket.sendto(data, addr):
-	        data = f.read(max_packet_length)
-	udp_socket.sendto('xumeshx', addr)
+		content += data
+		data = f.read(max_packet_length)
+	#print "done with data"
+	try:
+		udp_socket.sendto(content, addr)
+	except socket.error:
+		udp_socket.close()
 	udp_socket.close()
 	f.close()
 
