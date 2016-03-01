@@ -226,6 +226,7 @@ def main():
 		
 		while True:
 			data = connection.recv(max_packet_length)			# receive data from client and process accordingly
+			print data
 			if data:
 				# print "received from client: ", data
 				parse_output = parse_input(data, connection)

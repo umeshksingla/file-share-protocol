@@ -64,7 +64,7 @@ def main():
 			else:
 				f = open('received_file', 'w')
 
-			flag = 0
+			endOfFileReached = 0
 			
 			if TCP:	
 				while True:
@@ -72,14 +72,14 @@ def main():
 					if 'xumeshx' in data:
 						print data.replace('xumeshx', '')
 						break
-					if 'endoffile' in data or flag == 1:
-						if flag:
+					if 'endoffile' in data or endOfFileReached == 1:
+						if endOfFileReached:
 							print data
 						else:
-							flag = 1
+							endOfFileReached = 1
 							f.write(re.sub('endoffile', '', data))
 					else:
-						if not flag:
+						if not endOfFileReached:
 							f.write(data)
 				f.close()
 			
